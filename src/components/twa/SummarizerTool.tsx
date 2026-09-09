@@ -30,11 +30,7 @@ export function SummarizerTool() {
     setLoading(true);
     try {
       const text = await callAI(SYSTEM, `Raw Notes:\n${notes}`);
-      const [a, b, c] = splitSections(text, [
-        "Executive Summary",
-        "Action Items",
-        "Decisions",
-      ]);
+      const [a, b, c] = splitSections(text, ["Executive Summary", "Action Items", "Decisions"]);
       setSummary(a ?? text);
       setActions(b ?? "");
       setDecisions(c ?? "");
