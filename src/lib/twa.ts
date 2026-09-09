@@ -22,4 +22,3 @@ export function splitSections(text: string, headings: string[]): string[] {
     return text.slice(start, end).trim();
   });
 }
-

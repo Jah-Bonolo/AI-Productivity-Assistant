@@ -72,8 +72,8 @@ export function Home({ onOpen }: { onOpen: (id: HomeToolId) => void }) {
           Your <span className="text-brand-gradient">AI workplace</span> assistant
         </h2>
         <p className="text-muted-foreground mt-4 max-w-xl text-sm md:text-base">
-          Automate emails, summarize meetings, plan your week and research smarter — all from
-          one beautifully simple workspace.
+          Automate emails, summarize meetings, plan your week and research smarter — all from one
+          beautifully simple workspace.
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
           <Button onClick={() => onOpen("email")} className="bg-brand-gradient shadow-elegant">

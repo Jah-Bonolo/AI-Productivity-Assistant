@@ -107,9 +107,7 @@ export function PlannerTool() {
                     <div className="min-w-0">
                       <p className="text-muted-foreground font-mono text-xs">{b.time}</p>
                       <p className="truncate font-medium">{b.task}</p>
-                      {b.duration && (
-                        <p className="text-muted-foreground text-xs">{b.duration}</p>
-                      )}
+                      {b.duration && <p className="text-muted-foreground text-xs">{b.duration}</p>}
                     </div>
                     <span
                       className={`shrink-0 rounded-full border px-2.5 py-1 text-xs font-semibold ${priorityClass(b.priority)}`}
