@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   Bot,
   CalendarClock,
+  LayoutDashboard,
   Mail,
   Menu,
   NotebookPen,
@@ -12,9 +13,12 @@ import { useState } from "react";
 
 import { ChatTool } from "@/components/twa/ChatTool";
 import { EmailTool } from "@/components/twa/EmailTool";
+import { Home, type HomeToolId } from "@/components/twa/Home";
 import { PlannerTool } from "@/components/twa/PlannerTool";
 import { ResearchTool } from "@/components/twa/ResearchTool";
 import { SummarizerTool } from "@/components/twa/SummarizerTool";
+import { ThemeToggle } from "@/components/twa/ThemeToggle";
+import { Wordmark } from "@/components/twa/Wordmark";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -37,7 +41,8 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
-const TOOLS = [
+const NAV = [
+  { id: "home", label: "Dashboard", icon: LayoutDashboard },
   { id: "email", label: "Smart Email Generator", icon: Mail },
   { id: "notes", label: "Meeting Notes Summarizer", icon: NotebookPen },
   { id: "planner", label: "AI Task Planner", icon: CalendarClock },
@@ -45,11 +50,16 @@ const TOOLS = [
   { id: "chat", label: "AI Chatbot", icon: Bot },
 ] as const;
 
-type ToolId = (typeof TOOLS)[number]["id"];
+type ViewId = (typeof NAV)[number]["id"];
 
 function Dashboard() {
-  const [active, setActive] = useState<ToolId>("email");
+  const [active, setActive] = useState<ViewId>("home");
   const [navOpen, setNavOpen] = useState(false);
+
+  const open = (id: ViewId) => {
+    setActive(id);
+    setNavOpen(false);
+  };
 
   return (
     <div className="bg-background text-foreground min-h-screen md:flex">
@@ -58,26 +68,17 @@ function Dashboard() {
           navOpen ? "block" : "hidden md:block"
         }`}
       >
-        <div className="border-sidebar-border flex items-center gap-3 border-b px-5 py-5">
-          <div className="bg-primary text-primary-foreground grid h-10 w-10 shrink-0 place-items-center rounded-xl text-sm font-black">
-            TWA
-          </div>
-          <div className="min-w-0">
-            <p className="truncate text-sm font-bold tracking-tight">THE WORKING AI</p>
-            <p className="text-muted-foreground truncate text-xs">Workplace AI suite</p>
-          </div>
+        <div className="border-sidebar-border border-b px-5 py-5">
+          <Wordmark />
         </div>
         <nav className="space-y-1 p-3">
           <p className="text-muted-foreground px-3 py-2 text-[11px] font-semibold tracking-wider uppercase">
             Workspace
           </p>
-          {TOOLS.map((t) => (
+          {NAV.map((t) => (
             <button
               key={t.id}
-              onClick={() => {
-                setActive(t.id);
-                setNavOpen(false);
-              }}
+              onClick={() => open(t.id)}
               className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors ${
                 active === t.id
                   ? "bg-sidebar-accent text-sidebar-accent-foreground"
@@ -92,7 +93,7 @@ function Dashboard() {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="border-border bg-background/80 sticky top-0 z-10 grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-b px-4 py-3 backdrop-blur md:px-8">
+        <header className="border-border bg-background/80 sticky top-0 z-10 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b px-4 py-3 backdrop-blur md:px-8">
           <Button
             variant="ghost"
             size="icon"
@@ -106,10 +107,12 @@ function Dashboard() {
             <ShieldAlert className="h-3.5 w-3.5 shrink-0" />
             <span className="truncate">AI-generated content may require human review</span>
           </div>
+          <ThemeToggle />
         </header>
 
         <main className="min-w-0 flex-1 px-4 py-8 md:px-8">
           <h1 className="sr-only">THE WORKING AI dashboard</h1>
+          {active === "home" && <Home onOpen={(id: HomeToolId) => open(id)} />}
           {active === "email" && <EmailTool />}
           {active === "notes" && <SummarizerTool />}
           {active === "planner" && <PlannerTool />}
