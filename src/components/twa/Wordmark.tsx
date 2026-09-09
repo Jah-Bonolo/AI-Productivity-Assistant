@@ -1,9 +1,10 @@
 export function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex min-w-0 items-center gap-3">
-      <div className="bg-brand-gradient shadow-elegant grid h-10 w-10 shrink-0 place-items-center rounded-xl text-sm font-black tracking-tight text-white">
+      <div className="bg-brand-gradient shadow-elegant text-primary-foreground grid h-10 w-10 shrink-0 place-items-center rounded-xl text-sm font-black tracking-tight">
         TWA
       </div>
+
       <div className="min-w-0">
         <p className="truncate text-sm leading-tight font-extrabold tracking-tight">
           THE <span className="text-brand-gradient">WORKING</span> AI
