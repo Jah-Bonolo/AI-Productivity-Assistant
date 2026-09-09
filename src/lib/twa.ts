@@ -14,10 +14,12 @@ export async function callAI(system: string, prompt: string): Promise<string> {
 export function splitSections(text: string, headings: string[]): string[] {
   // Split model output into chunks by known heading keywords.
   const lower = text.toLowerCase();
-  const marks = headings.map((h) => ({ h, i: lower.indexOf(h.toLowerCase()) }));
-  if (marks.some((m) => m.i < 0)) return headings.map((_, idx) => (idx === 0 ? text : ""));
-  return marks.map((m, idx) => {
-    const end = idx + 1 < marks.length ? marks[idx + 1].i : text.length;
-    return text.slice(m.i, end).trim();
+  const marks = headings.map((h) => lower.indexOf(h.toLowerCase()));
+  if (marks.some((i) => i < 0)) return headings.map((_, idx) => (idx === 0 ? text : ""));
+  return marks.map((start, idx) => {
+    const next = marks[idx + 1];
+    const end = next === undefined ? text.length : next;
+    return text.slice(start, end).trim();
   });
 }
+
