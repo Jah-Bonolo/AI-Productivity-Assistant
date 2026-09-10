@@ -38,12 +38,156 @@ export type Database = {
         }
         Relationships: []
       }
+      workspace_members: {
+        Row: {
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+          workspace_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: string
+          user_id: string
+          workspace_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_members_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_posts: {
+        Row: {
+          author_id: string
+          body: string
+          category: string
+          created_at: string
+          id: string
+          title: string
+          workspace_id: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          category?: string
+          created_at?: string
+          id?: string
+          title: string
+          workspace_id: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          category?: string
+          created_at?: string
+          id?: string
+          title?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_posts_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_replies: {
+        Row: {
+          author_id: string | null
+          body: string
+          created_at: string
+          id: string
+          is_ai: boolean
+          post_id: string
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          is_ai?: boolean
+          post_id: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          is_ai?: boolean
+          post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_replies_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "workspace_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspaces: {
+        Row: {
+          branch: string | null
+          company: string
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          join_code: string
+          location: string | null
+          name: string
+        }
+        Insert: {
+          branch?: string | null
+          company: string
+          created_at?: string
+          created_by: string
+          description?: string | null
+          id?: string
+          join_code?: string
+          location?: string | null
+          name: string
+        }
+        Update: {
+          branch?: string | null
+          company?: string
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          id?: string
+          join_code?: string
+          location?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_workspace_member: {
+        Args: { _user_id: string; _workspace_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
