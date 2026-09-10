@@ -1,8 +1,16 @@
+import logo from "@/assets/twa-logo.png";
+
 export function Wordmark({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex min-w-0 items-center gap-3">
-      <div className="bg-brand-gradient shadow-elegant text-primary-foreground grid h-10 w-10 shrink-0 place-items-center rounded-xl text-sm font-black tracking-tight">
-        TWA
+      <div className="bg-card border-border grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-xl border p-1">
+        <img
+          src={logo}
+          alt="THE WORKING AI monogram"
+          width={44}
+          height={44}
+          className="h-full w-full object-contain"
+        />
       </div>
 
       <div className="min-w-0">
