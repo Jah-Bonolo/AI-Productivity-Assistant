@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Bot,
+  Building2,
   CalendarClock,
   LayoutDashboard,
   Mail,
@@ -19,6 +20,8 @@ import { ResearchTool } from "@/components/twa/ResearchTool";
 import { SummarizerTool } from "@/components/twa/SummarizerTool";
 import { ThemeToggle } from "@/components/twa/ThemeToggle";
 import { Wordmark } from "@/components/twa/Wordmark";
+import { WorkspacesTool } from "@/components/twa/WorkspacesTool";
+import { AccountMenu } from "@/components/twa/AccountMenu";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -48,6 +51,7 @@ const NAV = [
   { id: "planner", label: "AI Task Planner", icon: CalendarClock },
   { id: "research", label: "AI Research Assistant", icon: Search },
   { id: "chat", label: "AI Chatbot", icon: Bot },
+  { id: "workplaces", label: "Connected Workplaces", icon: Building2 },
 ] as const;
 
 type ViewId = (typeof NAV)[number]["id"];
@@ -107,7 +111,10 @@ function Dashboard() {
             <ShieldAlert className="h-3.5 w-3.5 shrink-0" />
             <span className="truncate">AI-generated content may require human review</span>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2 justify-self-end">
+            <ThemeToggle />
+            <AccountMenu />
+          </div>
         </header>
 
         <main className="min-w-0 flex-1 px-4 py-8 md:px-8">
@@ -118,6 +125,7 @@ function Dashboard() {
           {active === "planner" && <PlannerTool />}
           {active === "research" && <ResearchTool />}
           {active === "chat" && <ChatTool />}
+          {active === "workplaces" && <WorkspacesTool />}
         </main>
 
         <footer className="border-border text-muted-foreground border-t px-4 py-4 text-center text-xs md:px-8">
